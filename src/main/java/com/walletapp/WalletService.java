@@ -12,7 +12,7 @@ public interface WalletService {
 
     WalletDto addFundsToWalletById(Integer walletId,Double amount,String password)throws WalletException;
     WalletDto withdrawFundsFromWalletById(Integer walletById,Double amount,String password) throws WalletException;
-    String fundTransfer(Integer fromWalletId,Integer toWalletId,Double amount,String password)throws WalletException;
+    boolean fundTransfer(Integer fromWalletId,Integer toWalletId,Double amount,String password)throws WalletException;
 
     List<WalletDto> getAllWallets(String password)throws WalletException;
 }

@@ -88,7 +88,7 @@ public class CollectionWalletServiceImpl implements WalletService{
     }
 
     @Override
-    public String fundTransfer(Integer fromWalletId, Integer toWalletId, Double amount, String password) throws WalletException {
+    public boolean fundTransfer(Integer fromWalletId, Integer toWalletId, Double amount, String password) throws WalletException {
         WalletDto fromWallet = collectionWalletRepository.getWalletById(fromWalletId);
         WalletDto toWallet = collectionWalletRepository.getWalletById(toWalletId);
         if(fromWallet == null)
@@ -107,7 +107,8 @@ public class CollectionWalletServiceImpl implements WalletService{
         toWallet.setBalanceamount(towalletamount);
         System.out.println("From Wallet : "+fromWallet);
         System.out.println("To Wallet : "+toWallet);
-        return "Amount Transfered Successfully";
+        System.out.println( "Amount Transfered Successfully");
+        return true;
     }
 
     @Override

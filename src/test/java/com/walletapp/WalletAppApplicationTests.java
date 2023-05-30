@@ -38,26 +38,26 @@ class WalletAppApplicationTests {
 	@Test
 	void registerWalletTest() throws WalletException {
 		WalletDto wallet = this.walletService.registerWallet(new WalletDto(1, "saravanan","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,35000.00));
-		assertEquals("saravanan",wallet.getName_Of_Holder());
+		assertEquals("saravanan",wallet.getNameOfHolder());
 	}
 	@Test
 	void updateWalletTestold() throws WalletException {
 		WalletDto oldwallet=this.walletService.registerWallet(new WalletDto(1, "saravanan","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,35000.00));
 		WalletDto updatedwallet=this.walletService.updateWallet(new WalletDto(1, "santhosh","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,35000.00),"Sara@123");
 		WalletDto d=walletService.getWalletById(1,"Sara@123");
-		assertEquals("santhosh",d.getName_Of_Holder());
+		assertEquals("santhosh",d.getNameOfHolder());
 	}
 	@Test
 	void updateWalletTest() throws WalletException {
 		WalletDto updatedwallet=this.walletService.updateWallet(new WalletDto(1, "santhosh","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,35000.00),"Sara@123");
 		WalletDto d=walletService.getWalletById(1,"Sara@123");
-		assertEquals("santhosh",d.getName_Of_Holder());
+		assertEquals("santhosh",d.getNameOfHolder());
 	}
 
 	@Test
 	void getWalletByIdTest() throws WalletException {
 		WalletDto d=walletService.getWalletById(1,"Sara@123");
-		assertEquals("saravanan",d.getName_Of_Holder());
+		assertEquals("saravanan",d.getNameOfHolder());
 	}
 	@Test
 	void getWalletByIdThrowsExceptionTest() {
@@ -66,7 +66,7 @@ class WalletAppApplicationTests {
 	@Test
 	void deleteWalletByIdTest() throws WalletException {
 		WalletDto d=walletService.deleteWalletById(1,"Sara@123");
-		assertEquals("saravanan",d.getName_Of_Holder());
+		assertEquals("saravanan",d.getNameOfHolder());
 	}
 	@Test
 	void deleteWalletByIdThrowsExceptionTest() {
@@ -90,7 +90,7 @@ class WalletAppApplicationTests {
 	}
 	@Test
 	void fundtransferTest()throws WalletException {
-		String wallet = this.walletService.fundTransfer(1, 2, 1000.00, "Sara@123");
+		boolean wallet = this.walletService.fundTransfer(1, 2, 1000.00, "Sara@123");
 		WalletDto w = this.walletService.getWalletById(1, "Sara@123");
 		assertEquals(34000, w.getBalanceamount());
 	}

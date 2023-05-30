@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +29,7 @@ public class WalletControllerTest {
     @BeforeEach
     public void init(){
         this.restTemplate.postForObject("http://localhost:" + port + "/v1/addwallet",new WalletDto(1, "saravanan","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,35000.00),WalletDto.class);
-        this.restTemplate.postForObject("http://localhost:" + port + "/v1/addwallet",new WalletDto(2, "saravanan","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,350.00),WalletDto.class);
+        this.restTemplate.postForObject("http://localhost:" + port + "/v1/addwallet",new WalletDto(2, "santhosh","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,350.00),WalletDto.class);
     }
     @Test
     public void greetingShouldReturnDefaultMessage() throws Exception {
@@ -38,7 +40,7 @@ public class WalletControllerTest {
     @Test
     public void getWalletByIdTest() throws Exception {
         WalletDto foundWallet =this.restTemplate.getForObject("http://localhost:" + port + "/v1/getwallet/1/Sara@123", WalletDto.class);
-        assertEquals("saravanan",foundWallet.getName_Of_Holder());
+        assertEquals("saravanan",foundWallet.getNameOfHolder());
     }
 
     @Test
@@ -49,13 +51,13 @@ public class WalletControllerTest {
     @Test
     public void addResourceTest() throws WalletException{
         WalletDto d=this.restTemplate.postForObject("http://localhost:" + port + "/v1/addwallet",new WalletDto(1, "saravanan","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,35000.00),WalletDto.class);
-        assertEquals("saravanan",d.getName_Of_Holder());
+        assertEquals("saravanan",d.getNameOfHolder());
     }
     @Test
     public void replaceResourceTest() throws WalletException{
         this.restTemplate.put("http://localhost:" + port + "/v1/updatewallet/Sara@123",new WalletDto(1, "santhosh","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,35000.00),WalletDto.class);
         WalletDto foundWallet =this.restTemplate.getForObject("http://localhost:" + port + "/v1/getwallet/1/Sara@123", WalletDto.class);
-        assertEquals("santhosh",foundWallet.getName_Of_Holder());
+        assertEquals("santhosh",foundWallet.getNameOfHolder());
     }
     @Test
     public void deleteResourceTest() throws WalletException{
@@ -75,8 +77,8 @@ public class WalletControllerTest {
     }
     @Test
     public void TransferfundsfromResourceTest()throws WalletException{
-        String wallet=this.restTemplate.postForObject("http://localhost:" + port + "/v1/transferfundsBywallet/fromwalletId/1/towalletId/2/amount/100/password/Sara@123",new WalletDto(1, "saravanan","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,35000.00),String.class);
-        assertEquals("Amount Transfered Successfully",wallet);
+        boolean wallet=this.restTemplate.postForObject("http://localhost:" + port + "/v1/transferfundsBywallet/fromwalletId/1/towalletId/2/amount/100/password/Sara@123",new WalletDto(1, "saravanan","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,35000.00),boolean.class);
+        assertEquals(true,wallet);
     }
     @Test
     public void TransferfundsfromResourcefromwalletTest()throws WalletException{

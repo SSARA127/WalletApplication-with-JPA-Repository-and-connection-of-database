@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/v1") //
+@CrossOrigin(value="http://localhost:4200/")
 public class WalletController {
     @Autowired
     private WalletService walletService ;
@@ -21,16 +22,19 @@ public class WalletController {
     }
 
     @GetMapping("/getwallet/{id}/{password}")
-    public WalletDto getEmployeeById(@PathVariable Integer id,@PathVariable String password) throws WalletException{
+    @ResponseStatus(value=HttpStatus.CREATED)
+    public WalletDto getWalletById(@PathVariable Integer id,@PathVariable String password) throws WalletException{
         return walletService.getWalletById(id,password);
     }
     @PostMapping("/addwallet")
+    @ResponseStatus(value=HttpStatus.CREATED)
     public WalletDto addResource(@Valid @RequestBody WalletDto wallet) throws WalletException {
         return walletService.registerWallet(wallet);
     }
 
     @PutMapping("/updatewallet/{password}")
-    public WalletDto replaceResource(@RequestBody WalletDto wallet,@PathVariable String password) throws WalletException {
+    @ResponseStatus(value=HttpStatus.CREATED)
+    public WalletDto replaceResource(@Valid @RequestBody WalletDto wallet,@PathVariable String password) throws WalletException {
         return walletService.updateWallet(wallet,password);
     }
 
@@ -53,7 +57,7 @@ public class WalletController {
         return walletService.withdrawFundsFromWalletById(id,amount,password);
     }
     @PostMapping("/transferfundsBywallet/fromwalletId/{fromwalletId}/towalletId/{towalletId}/amount/{amount}/password/{password}")
-    public String TransferfundsfromResource(@PathVariable Integer fromwalletId,@PathVariable Integer towalletId,@PathVariable Double amount,@PathVariable String password)throws WalletException{
+    public boolean TransferfundsfromResource(@PathVariable Integer fromwalletId,@PathVariable Integer towalletId,@PathVariable Double amount,@PathVariable String password)throws WalletException{
         return walletService.fundTransfer(fromwalletId,towalletId,amount,password);
     }
     @GetMapping("/getAllwallet/password/{password}")
@@ -61,24 +65,28 @@ public class WalletController {
         return walletService.getAllWallets(password);
     }
 
-    @GetMapping("getwallet/name_of_holder/{name_of_holder}")
-    public List<WalletDto> getAllWalletHavingNameOfHolder(@PathVariable String name_of_holder){
-        return this.walletJpaRepository.findByName_of_holder(name_of_holder);
+    @GetMapping("findallwalletbynameofholder/nameofholder/{nameofholder}")
+    public List<WalletDto> getAllWalletHavingNameOfHolder(@PathVariable String nameofholder){
+        return this.walletJpaRepository.findByNameofholder(nameofholder);
     }
-    @GetMapping("wallet/contain/{name_of_holder}")
-    public List<WalletDto> getAllWalletContainingNameOfHolder(@PathVariable("name_of_holder") String name_of_holder){
-        return this.walletJpaRepository.findByName_Of_HolderContaining(name_of_holder);
+    @GetMapping("findallwalletbycontainingnameofholder/contain/{nameofholder}")
+    public List<WalletDto> getAllWalletContainingNameOfHolder(@PathVariable("nameofholder") String nameofholder){
+        return this.walletJpaRepository.findByNameofholderContaining(nameofholder);
     }
 
-    @GetMapping("wallet/Amount/{minAmount}/{maxAmount}")
+    @GetMapping("getwalletbyamountbetween/Amount/{minAmount}/{maxAmount}")
     public List<WalletDto> findAllWalletHavingAmountBetween(@PathVariable("minAmount") Double minAmount,
                                                                  @PathVariable("maxAmount")Double maxAmount){
-        return this.walletJpaRepository.findByBalanceamountOrderByBalanceamountDesc(minAmount,maxAmount);
+        return this.walletJpaRepository.findByBalanceamountBetweenOrderByBalanceamountDesc(minAmount,maxAmount);
+    }
+    @GetMapping("getwalletbybalanceamount/{amount}")
+    public List<WalletDto> findwalletByBalanceamount(Double amount){
+        return this.walletJpaRepository.findByBalanceamount(amount);
     }
 
-    @GetMapping("custom/wallet/{name_of_holder)}")
-    public List<WalletDto> findAllWalletHavingNameOfHolder(@PathVariable("name_of_holder") String name_of_holder){
-        return this.walletJpaRepository.getAllByName_Of_HolderLike("%"+name_of_holder+"%");
+    @GetMapping("custom/wallet/{nameofholder}")
+    public List<WalletDto> findAllWalletHavingNameOfHolder(@PathVariable("nameofholder") String nameofholder){
+        return this.walletJpaRepository.getAllByNameofholderLike("%"+nameofholder+"%");
     }
 
 }

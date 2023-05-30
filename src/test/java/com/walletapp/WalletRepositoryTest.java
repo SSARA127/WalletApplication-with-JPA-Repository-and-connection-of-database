@@ -23,26 +23,26 @@ public class WalletRepositoryTest {
     @Test
     public void createWalletTest() {
         WalletDto wallet = this.collectionWalletRepository.createWallet(new WalletDto(1, "saravanan", "googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n, 35000.00));
-        assertEquals("saravanan", wallet.getName_Of_Holder());
+        assertEquals("saravanan", wallet.getNameOfHolder());
     }
 
     @Test
     public void getWalletByIdTest() {
 
-        assertEquals("saravanan", collectionWalletRepository.getWalletById(1).getName_Of_Holder());
+        assertEquals("saravanan", collectionWalletRepository.getWalletById(1).getNameOfHolder());
     }
 
     @Test
     public void deleteWalletByIdTest() {
         WalletDto deletedWallet = collectionWalletRepository.deleteWalletById(1);
-        assertEquals("saravanan", deletedWallet.getName_Of_Holder());
+        assertEquals("saravanan", deletedWallet.getNameOfHolder());
     }
 
     @Test
     void updateWalletTest() {
         WalletDto updatedwallet = this.collectionWalletRepository.updateWallet(new WalletDto(1, "santhosh", "googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n, 35000.00));
         WalletDto d = collectionWalletRepository.getWalletById(1);
-        assertEquals("santhosh", d.getName_Of_Holder());
+        assertEquals("santhosh", d.getNameOfHolder());
     }
 
     @Test
@@ -50,6 +50,6 @@ public class WalletRepositoryTest {
         WalletDto oldwallet = this.collectionWalletRepository.createWallet(new WalletDto(1, "saravanan", "googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n, 35000.00));
         WalletDto updatedwallet = this.collectionWalletRepository.updateWallet(new WalletDto(1, "santhosh", "googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n, 35000.00));
         WalletDto d = collectionWalletRepository.getWalletById(1);
-        assertEquals("santhosh", d.getName_Of_Holder());
+        assertEquals("santhosh", d.getNameOfHolder());
     }
 }

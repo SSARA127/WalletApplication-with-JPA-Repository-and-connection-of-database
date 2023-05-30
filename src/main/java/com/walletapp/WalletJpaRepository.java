@@ -11,15 +11,17 @@ import java.util.List;
 public interface WalletJpaRepository extends JpaRepository<WalletDto,Integer> {
     //Creation of custom queries by method name using keyWords
 
-    List<WalletDto> findByName_of_holder(String name_of_holder);
-    List<WalletDto> findByName_Of_HolderContaining(String name_of_holder);
-    List<WalletDto> findByBalanceamountOrderByBalanceamountDesc(Double minBalanceAmount,Double maxBalanceAmount);
+      List<WalletDto> findByNameofholder(String name_of_holder);
+      List<WalletDto> findByNameofholderContaining(String name_of_holder);
+      List<WalletDto> findByBalanceamount(Double amount);
 
-    @Query("SELECT wallet FROM WalletDto wallet")
-    List<WalletDto> getAllWallets();
+      List<WalletDto> findByBalanceamountBetweenOrderByBalanceamountDesc(Double minBalanceAmount,Double maxBalanceAmount);
 
-    @Query("SELECT wallet FROM WalletDto wallet WHERE wallet.name_of_holder LIKE :name_of_holder")
-    List<WalletDto> getAllByName_Of_HolderLike(String name_of_holder);
+      @Query("SELECT wallet FROM WalletDto wallet")
+      List<WalletDto> getAllWallets();
+
+      @Query("SELECT wallet FROM WalletDto wallet WHERE wallet.nameofholder LIKE :nameofholder")
+      List<WalletDto> getAllByNameofholderLike(String nameofholder);
 
 
 

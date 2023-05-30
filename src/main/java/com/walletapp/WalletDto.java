@@ -1,8 +1,7 @@
 package com.walletapp;
 
-import org.springframework.context.annotation.PropertySource;
-
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -14,12 +13,12 @@ public class WalletDto { // POJO
     private Integer id;
 
     @NotBlank(message = "Name of holder can't be null, it should contain chars")
-    @Pattern(regexp = "[a-zA-Z]{3,16}", message = "Name of holder should contain min 3 & max 16 chars , no digits and special chars allowed.")
-    private String name_of_holder;
+    @Pattern(regexp = "[a-zA-Z ]{3,16}", message = "Name of holder should contain min 3 & max 16 chars , no digits and special chars allowed.")
+    private String nameofholder;
 
     @NotBlank(message = "Name of wallet can't be null, it should contain chars")
-    @Pattern(regexp = "[a-zA-Z]{3,16}", message = "Name of wallet should contain min 3 & max 16 chars , no digits and special chars allowed.")
-    private String name_of_wallet;
+    @Pattern(regexp = "[a-zA-Z ]{3,16}", message = "Name of wallet should contain min 3 & max 16 chars , no digits and special chars allowed.")
+    private String nameofwallet;
     @Email(message = "Please provide valid email. e.g name@ford.com")
     private String email;
     @NotNull(message = "password can't be null")
@@ -30,7 +29,7 @@ public class WalletDto { // POJO
     @NotNull(message = "Amount can't be null")
     private Double balanceamount;
     @FutureOrPresent(message = "wallet data can't be in past")
-    private LocalDate date_of_wallet_creation;
+    private LocalDate dateofwalletcreation;
 
     public WalletDto() {
 
@@ -60,13 +59,27 @@ public class WalletDto { // POJO
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-    public LocalDate getDate_Of_Wallet_Creation() {
-        return date_of_wallet_creation;
+    public String getNameOfHolder() {
+        return nameofholder;
     }
 
-    public void setDate_Of_Wallet_Creation(LocalDate date_of_wallet_creation) {
-        this.date_of_wallet_creation = date_of_wallet_creation;
+    public void setNameOfHolder(String nameofholder) {
+        this.nameofholder = nameofholder;
+    }
+    public String getNameOfWallet() {
+        return nameofwallet;
+    }
+
+    public void setNameOfWallet(String nameofwallet) {
+        this.nameofwallet = nameofwallet;
+    }
+
+    public LocalDate getDateOfWalletCreation() {
+        return dateofwalletcreation;
+    }
+
+    public void setDateOfWalletCreation(LocalDate dateofwalletcreation) {
+        this.dateofwalletcreation = dateofwalletcreation;
     }
     public Double getBalanceamount() {
         return balanceamount;
@@ -83,42 +96,28 @@ public class WalletDto { // POJO
         this.id = id;
     }
 
-    public String getName_Of_Holder() {
-        return name_of_holder;
-    }
-
-    public void setName_Of_Holder(String name_of_holder) {
-        this.name_of_holder = name_of_holder;
-    }
-    public String getName_Of_Wallet() {
-        return name_of_wallet;
-    }
-
-    public void setName_Of_Wallet(String name_of_wallet) {
-        this.name_of_wallet = name_of_wallet;
-    }
 
 
-    public WalletDto(Integer id, String name_of_holder,String name_of_wallet, String email, String password, String phoneNumber, LocalDate date_of_wallet_creation, Double balanceamount) {
+    public WalletDto(Integer id, String nameofholder,String nameofwallet, String email, String password, String phoneNumber, LocalDate dateofwalletcreation, Double balanceamount) {
         this.id = id;
-        this.name_of_holder = name_of_holder;
-        this.name_of_wallet=name_of_wallet;
+        this.nameofholder = nameofholder;
+        this.nameofwallet=nameofwallet;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.date_of_wallet_creation = date_of_wallet_creation;
+        this.dateofwalletcreation = dateofwalletcreation;
         this.balanceamount = balanceamount;
     }
     @Override
     public String toString() {
         return "Wallet{" +
                 "id=" + id +
-                ", name_of_holder='" + name_of_holder + '\'' +
-                ", name_of_wallet='" + name_of_wallet +
+                ", name_of_holder='" + nameofholder + '\'' +
+                ", name_of_wallet='" + nameofwallet +
                 ", email="+email+
                 ",password="+password+
                 ",phoneNumber="+phoneNumber+
-                ",Date_of_wallet_creation="+date_of_wallet_creation+
+                ",Date_of_wallet_creation="+dateofwalletcreation+
                 ",Amount=" + balanceamount +
                 '}';
     }

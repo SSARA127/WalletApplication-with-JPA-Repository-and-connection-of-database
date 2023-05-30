@@ -23,7 +23,7 @@ public class WalletServiceByMockRepository {
         WalletDto wallet=this.walletService.registerWallet(new WalletDto(1, "saravanan","googlepay", "saravanan@gmail.com", "Sara@123", "9384196731", n,35000.00));
         given(this.collectionWalletRepository.getWalletById(1))
                 .willReturn(wallet);
-        assertEquals("saravanan",this.walletService.getWalletById(1,"Sara@123").getName_Of_Holder());
+        assertEquals("saravanan",this.walletService.getWalletById(1,"Sara@123").getNameOfHolder());
     }
 
     @Test

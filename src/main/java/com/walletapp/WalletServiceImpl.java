@@ -85,14 +85,14 @@ public class WalletServiceImpl implements WalletService{
     }
 
     @Override
-    public String fundTransfer(Integer fromWalletId, Integer toWalletId, Double amount, String password) throws WalletException {
+    public boolean fundTransfer(Integer fromWalletId, Integer toWalletId, Double amount, String password) throws WalletException {
         Optional<WalletDto> fromwalletOptional = this.walletJpaRepository.findById(fromWalletId);
         Optional<WalletDto> towalletOptional = this.walletJpaRepository.findById(toWalletId);
         if(fromwalletOptional.isEmpty())
             throw new WalletException("FromWallet Id does not exists.");
         if(towalletOptional.isEmpty())
             throw new WalletException("ToWallet Id does not exists.");
-        if(!(fromwalletOptional.get().getPassword().equals(password) && towalletOptional.get().getPassword().equals(password)))
+        if(!(fromwalletOptional.get().getPassword().equals(password) ))
             throw new WalletException("Incorrect password.");
         if(fromwalletOptional.get().getBalanceamount()<amount)
             throw new WalletException("Amount is Insufficient to transfer from FromWallet");
@@ -106,7 +106,8 @@ public class WalletServiceImpl implements WalletService{
         this.walletJpaRepository.save(towalletOptional.get());
         System.out.println("From Wallet : "+fromwalletOptional.get());
         System.out.println("To Wallet : "+towalletOptional.get());
-        return "Amount Transfered Successfully";
+        System.out.println( "Amount Transfered Successfully");
+        return true;
     }
 
     @Override
